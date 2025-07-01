@@ -12,7 +12,10 @@ function App() {
     localStorage.setItem('telegramId', telegramId);
     fetch('/api/user-auth', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
       body: JSON.stringify({ telegramId })
     });
   }, [telegramId]);

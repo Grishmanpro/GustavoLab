@@ -11,14 +11,20 @@ export default function Dashboard({ telegramId }) {
 
   useEffect(() => {
     if (!telegramId) return;
-    fetch(`/api/user/videos?telegramId=${telegramId}`)
+    fetch(`/api/user/videos?telegramId=${telegramId}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    })
       .then(res => res.json())
       .then(setVideos);
-    fetch(`/api/payments?telegramId=${telegramId}`)
+    fetch(`/api/payments?telegramId=${telegramId}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    })
       .then(res => res.json())
       .then(setPayments);
     if (telegramId === '123456789') {
-      fetch(`/api/admin/users?telegramId=${telegramId}`)
+      fetch(`/api/admin/users?telegramId=${telegramId}`, {
+        headers: { 'ngrok-skip-browser-warning': 'true' }
+      })
         .then(res => res.json())
         .then(setAdminUsers);
     }
