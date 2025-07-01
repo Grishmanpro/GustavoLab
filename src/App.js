@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 
 function App() {
+  const telegramAvailable = window.Telegram && window.Telegram.WebApp;
+
   const [telegramId, setTelegramId] = useState(() =>
     localStorage.getItem('telegramId') ||
-    window.Telegram?.WebApp?.initDataUnsafe?.user?.id || ''
+    (telegramAvailable
+      ? window.Telegram.WebApp.initDataUnsafe?.user?.id
+      : 'dev-mode-id') ||
+    ''
   );
 
   useEffect(() => {
@@ -19,6 +24,10 @@ function App() {
       body: JSON.stringify({ telegramId })
     });
   }, [telegramId]);
+
+  if (!telegramAvailable) {
+    return <div>Please open this app inside Telegram.</div>;
+  }
 
   return <Dashboard telegramId={telegramId} />;
 }
