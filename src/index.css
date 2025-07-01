@@ -10,5 +10,5 @@
 }
 
 body {
-  @apply bg-dark text-white font-suisse;
+  @apply bg-light text-black font-suisse;
 }
