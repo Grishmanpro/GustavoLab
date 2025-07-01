@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('../public/fonts/SuisseIntl_Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  @apply bg-dark text-white font-suisse;
+}
