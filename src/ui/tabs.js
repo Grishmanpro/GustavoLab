@@ -32,7 +32,7 @@ export function TabsTrigger({ children, value, isActive, onClick, className }) {
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded ${isActive ? 'bg-[#FF0040] text-white' : 'bg-[#2a2a2e] text-gray-300'} ${className}`}
+      className={`px-4 py-2 rounded ${isActive ? 'bg-[#FF0040] text-white' : 'bg-surface text-gray-700'} ${className}`}
     >
       {children}
     </button>

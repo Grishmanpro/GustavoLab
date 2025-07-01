@@ -11,6 +11,8 @@ module.exports = {
       },
       colors: {
         dark: '#0C0C0F',
+        light: '#ffffff',
+        surface: '#f3f4f6',
         accent: '#FF0040',
       },
       boxShadow: {

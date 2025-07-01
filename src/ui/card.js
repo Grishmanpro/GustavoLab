@@ -1,7 +1,7 @@
 import React from "react";
 
 export function Card({ children, className }) {
-  return <div className={`rounded-xl border border-gray-800 bg-[#1A1A1F] ${className}`}>{children}</div>;
+  return <div className={`rounded-xl border border-gray-300 bg-surface ${className}`}>{children}</div>;
 }
 
 export function CardContent({ children, className }) {
