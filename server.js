@@ -5,6 +5,19 @@ app.use(express.json());
 
 
 const path = require('path');
+const fs = require('fs');
+const { execSync } = require('child_process');
+
+// Ensure React build exists
+const buildDir = path.join(__dirname, 'build');
+if (!fs.existsSync(buildDir)) {
+  console.log('Build directory not found. Building React app...');
+  try {
+    execSync('npm run build', { stdio: 'inherit' });
+  } catch (err) {
+    console.error('Failed to build React app:', err);
+  }
+}
 
 
 app.use(express.json());
