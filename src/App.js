@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  const [telegramId, setTelegramId] = useState('dev-mode-id');
+  const DEFAULT_ID = 'dev-mode-id';
+  const [userId, setUserId] = useState(() => {
+    return localStorage.getItem('userId') || DEFAULT_ID;
+  });
 
   useEffect(() => {
-    let id = 'dev-mode-id';
-    try {
-      if (window.Telegram) {
-        id = window.Telegram.WebApp.initDataUnsafe?.user?.id || 'dev-mode-id';
-      }
-    } catch (err) {
-      console.error('Failed to read telegramId', err);
+    const stored = localStorage.getItem('userId');
+    const id = stored || DEFAULT_ID;
+    if (!stored) {
+      localStorage.setItem('userId', id);
     }
-
-    setTelegramId(id);
+    setUserId(id);
 
     fetch('/api/user-auth', {
       method: 'POST',
@@ -22,13 +21,12 @@ function App() {
         'Content-Type': 'application/json',
         'ngrok-skip-browser-warning': 'true'
       },
+      // Backend still expects the field name 'telegramId'
       body: JSON.stringify({ telegramId: id })
     }).catch(err => console.error('user-auth failed', err));
   }, []);
 
-  console.log('Current telegramId:', telegramId);
-
-  return <Dashboard telegramId={telegramId} />;
+  return <Dashboard userId={userId} />;
 }
 
 export default App;

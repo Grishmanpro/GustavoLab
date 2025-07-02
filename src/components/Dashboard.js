@@ -4,31 +4,31 @@ import { Button } from "../ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 
-export default function Dashboard({ telegramId }) {
+export default function Dashboard({ userId }) {
   const [videos, setVideos] = useState([]);
   const [payments, setPayments] = useState([]);
   const [adminUsers, setAdminUsers] = useState([]);
 
   useEffect(() => {
-    if (!telegramId) return;
-    fetch(`/api/user/videos?telegramId=${telegramId}`, {
+    if (!userId) return;
+    fetch(`/api/user/videos?telegramId=${userId}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' }
     })
       .then(res => res.json())
       .then(setVideos);
-    fetch(`/api/payments?telegramId=${telegramId}`, {
+    fetch(`/api/payments?telegramId=${userId}`, {
       headers: { 'ngrok-skip-browser-warning': 'true' }
     })
       .then(res => res.json())
       .then(setPayments);
-    if (telegramId === '123456789') {
-      fetch(`/api/admin/users?telegramId=${telegramId}`, {
+    if (userId === '123456789') {
+      fetch(`/api/admin/users?telegramId=${userId}`, {
         headers: { 'ngrok-skip-browser-warning': 'true' }
       })
         .then(res => res.json())
         .then(setAdminUsers);
     }
-  }, [telegramId]);
+  }, [userId]);
 
   return (
     <div className="min-h-screen bg-light text-black font-suisse p-6 space-y-6">
@@ -40,7 +40,7 @@ export default function Dashboard({ telegramId }) {
         <TabsList className="bg-surface rounded-md p-1 shadow-neon">
           <TabsTrigger value="dashboard" className="text-black hover:text-accent">Dashboard</TabsTrigger>
           <TabsTrigger value="payments" className="text-black hover:text-accent">Payments</TabsTrigger>
-          {telegramId === '123456789' && (
+          {userId === '123456789' && (
             <TabsTrigger value="admin" className="text-black hover:text-accent">Admin</TabsTrigger>
           )}
         </TabsList>
@@ -114,7 +114,7 @@ export default function Dashboard({ telegramId }) {
             </CardContent>
           </Card>
         </TabsContent>
-        {telegramId === '123456789' && (
+        {userId === '123456789' && (
           <TabsContent value="admin">
             <Card className="bg-surface shadow-neon">
               <CardContent className="p-6 overflow-x-auto">
