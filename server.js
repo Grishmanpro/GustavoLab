@@ -2,6 +2,28 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+
+
+const path = require('path');
+
+
+app.use(express.json());
+
+// ✅ ВАЖНО: Раздаём собранный frontend
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+// ❗ Чтобы SPA (React Router) работал
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+// ...остальной код (API роуты и т.д.)
+
+
 // In-memory sample data
 const users = {};
 const videos = {
