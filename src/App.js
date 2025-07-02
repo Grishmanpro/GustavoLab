@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  const telegramAvailable = window.Telegram && window.Telegram.WebApp;
-
-  const [telegramId, setTelegramId] = useState(() =>
-    localStorage.getItem('telegramId') ||
-    (telegramAvailable
-      ? window.Telegram.WebApp.initDataUnsafe?.user?.id
-      : 'dev-mode-id') ||
-    ''
-  );
+  const [telegramId, setTelegramId] = useState(() => {
+    try {
+      const storedId = localStorage.getItem('telegramId');
+      if (storedId) return storedId;
+      const apiId = window?.Telegram?.WebApp?.initDataUnsafe?.user?.id;
+      return apiId || 'dev-telegram-id';
+    } catch (err) {
+      console.error('Failed to obtain telegramId', err);
+      return 'dev-telegram-id';
+    }
+  });
 
   useEffect(() => {
     if (!telegramId) return;
@@ -24,10 +26,6 @@ function App() {
       body: JSON.stringify({ telegramId })
     });
   }, [telegramId]);
-
-  if (!telegramAvailable) {
-    return <div>Please open this app inside Telegram.</div>;
-  }
 
   return <Dashboard telegramId={telegramId} />;
 }
